@@ -1,10 +1,13 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { gql } from "@apollo/client";
 
+import client from "./lib/apolloClient";
 import BlogCard from "./components/BlogCard";
 import Header from "./components/Header";
+import { Lesson } from "./lib/types";
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ lessons }) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
@@ -25,12 +28,16 @@ const Home: NextPage = () => {
                 Our latest blog posts.
               </p>
             </div>
-            <BlogCard
-              date={new Date()}
-              slug="dfvdfv"
-              title="kdfjbvhbdf"
-              description="fsvhbf"
-            />
+            {lessons &&
+              lessons.map((lesson: Lesson) => (
+                <BlogCard
+                  key={lesson.id}
+                  date={lesson.createdAt}
+                  slug={lesson.id}
+                  title={lesson.title}
+                  description={lesson.intro.text}
+                />
+              ))}
           </div>
         </main>
       </div>
@@ -39,3 +46,27 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export async function getStaticProps() {
+  const { data } = await client.query({
+    query: gql`
+      query lessons {
+        lessons {
+          id
+          createdAt
+          intro {
+            text
+          }
+          title
+        }
+      }
+    `,
+  });
+  console.log(data);
+
+  return {
+    props: {
+      lessons: data.lessons,
+    },
+  };
+}
