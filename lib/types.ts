@@ -22,3 +22,9 @@ export interface Lesson {
   title: string;
   intro: TextProp;
 }
+
+export interface Test {
+  answer: string;
+  options: string[];
+  questions: string;
+}

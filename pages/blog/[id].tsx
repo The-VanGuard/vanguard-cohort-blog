@@ -1,14 +1,25 @@
 import React from "react";
-import { useRouter } from "next/router";
-import { gql } from "@apollo/client";
 
 import client from "../../lib/apolloClient";
 import { ImageProp, MarkdownProp, Question, TextProp } from "../../lib/types";
 import Header from "../components/Header";
 import Head from "next/head";
-import Logo from "../../public/logo.png";
 import Image from "next/image";
 import moment from "moment";
+import { serialize } from "next-mdx-remote/serialize";
+import { MDXRemote } from "next-mdx-remote";
+import BlogSection from "../components/BlogSection";
+import ParagraphComponent from "../components/ParagraphComponent";
+import { Heading2 } from "../components/HeadingComponents";
+import {
+  ListComponent,
+  UnorderedListComponent,
+} from "../components/ListComponent";
+import AnchorComponent from "../components/AnchorComponent";
+import CodeComponent from "../components/CodeComponent";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+import TestComponent from "../components/TestComponent";
 
 interface lessonProps {
   id: string;
@@ -22,6 +33,19 @@ interface lessonProps {
   additionalResources: MarkdownProp;
   createdAt: Date;
 }
+
+const DynamicHeader = dynamic(() => import("../components/CodeComponent"), {
+  ssr: false,
+});
+
+const components = {
+  h2: Heading2,
+  p: ParagraphComponent,
+  ul: UnorderedListComponent,
+  li: ListComponent,
+  a: AnchorComponent,
+  code: DynamicHeader,
+};
 
 // this is where the component is defined
 function Blog({ lesson }: lessonProps) {
@@ -88,10 +112,35 @@ function Blog({ lesson }: lessonProps) {
                   height={475}
                 />
 
-                <div className="mt-6 w-full">
-                  <h1>Introduction</h1>
-                  <p>{lesson.intro.text}</p>
-                </div>
+                <BlogSection title="Introduction">
+                  <ParagraphComponent>{lesson.intro.text}</ParagraphComponent>
+                </BlogSection>
+
+                <BlogSection title="Recap">
+                  <MDXRemote {...lesson.recapMDX} components={components} />
+                </BlogSection>
+
+                <BlogSection title="Class Description">
+                  <MDXRemote {...lesson.classDescMDX} components={components} />
+                </BlogSection>
+
+                <BlogSection title="Test">
+                  <TestComponent data={lesson.test} />
+                </BlogSection>
+
+                <BlogSection title="Assignment">
+                  <MDXRemote
+                    {...lesson.assignmentMDX}
+                    components={components}
+                  />
+                </BlogSection>
+
+                <BlogSection title="Additional Resources">
+                  <MDXRemote
+                    {...lesson.additionalResourcesMDX}
+                    components={components}
+                  />
+                </BlogSection>
               </div>
             </div>
           </div>
@@ -138,9 +187,22 @@ export async function getStaticProps({ params }) {
     }
   );
 
+  const recapMDX = await serialize(lesson.recap.markdown);
+  const classDescMDX = await serialize(lesson.classDescription.markdown);
+  const assignmentMDX = await serialize(lesson.assignment.markdown);
+  const additionalResourcesMDX = await serialize(
+    lesson.additionalResources.markdown
+  );
+
   return {
     props: {
-      lesson: lesson,
+      lesson: {
+        ...lesson,
+        recapMDX,
+        classDescMDX,
+        assignmentMDX,
+        additionalResourcesMDX,
+      },
     },
   };
 }
