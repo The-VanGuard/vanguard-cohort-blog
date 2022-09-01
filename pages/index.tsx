@@ -2,8 +2,8 @@ import type { NextPage } from "next";
 import Head from "next/head";
 
 import client from "../lib/apolloClient";
-import BlogCard from "./components/BlogCard";
-import Header from "./components/Header";
+import BlogCard from "../components/BlogCard";
+import Header from "../components/Header";
 import { Lesson } from "../lib/types";
 
 const Home: NextPage = ({ lessons }: any) => {

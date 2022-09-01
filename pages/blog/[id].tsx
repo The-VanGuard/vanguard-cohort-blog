@@ -2,24 +2,24 @@ import React from "react";
 
 import client from "../../lib/apolloClient";
 import { ImageProp, MarkdownProp, Question, TextProp } from "../../lib/types";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 import Head from "next/head";
 import Image from "next/image";
 import moment from "moment";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
-import BlogSection from "../components/BlogSection";
-import ParagraphComponent from "../components/ParagraphComponent";
+import BlogSection from "../../components/BlogSection";
+import ParagraphComponent from "../../components/ParagraphComponent";
 import { Heading2 } from "../../lib/HeadingComponents";
 import {
   ListComponent,
   UnorderedListComponent,
 } from "../../lib/ListComponent";
-import AnchorComponent from "../components/AnchorComponent";
-import CodeComponent from "../components/CodeComponent";
+import AnchorComponent from "../../components/AnchorComponent";
+import CodeComponent from "../../components/CodeComponent";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import TestComponent from "../components/TestComponent";
+import TestComponent from "../../components/TestComponent";
 import Link from "next/link";
 
 interface lessonProps {
@@ -35,7 +35,7 @@ interface lessonProps {
   createdAt: Date;
 }
 
-const DynamicHeader = dynamic(() => import("../components/CodeComponent"), {
+const DynamicHeader = dynamic(() => import("../../components/CodeComponent"), {
   ssr: false,
 });
 

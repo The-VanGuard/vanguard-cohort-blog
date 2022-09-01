@@ -1,5 +1,5 @@
 import React from "react";
-import { Test } from "../../lib/types";
+import { Test } from "../lib/types";
 import ParagraphComponent from "./ParagraphComponent";
 import TestCard from "./TestCard";
 
