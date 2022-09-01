@@ -1,14 +1,12 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { gql } from "@apollo/client";
 
 import client from "../lib/apolloClient";
 import BlogCard from "./components/BlogCard";
 import Header from "./components/Header";
 import { Lesson } from "../lib/types";
 
-const Home: NextPage = ({ lessons }) => {
-
+const Home: NextPage = ({ lessons }: any) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
