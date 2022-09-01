@@ -20,6 +20,7 @@ import CodeComponent from "../components/CodeComponent";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import TestComponent from "../components/TestComponent";
+import Link from "next/link";
 
 interface lessonProps {
   id: string;
@@ -113,9 +114,11 @@ function Blog({ lesson }: lessonProps) {
                   </div>
                 )}
                 <div className="pt-8">
-                  <a className="text-purple-500 hover:text-purple-600" href="/">
-                    ← Back to the blog
-                  </a>
+                  <Link href="/">
+                    <a className="text-purple-500 hover:text-purple-600">
+                      ← Back to the blog
+                    </a>
+                  </Link>
                 </div>
               </div>
               <div className="w-full flex flex-col items-center">
