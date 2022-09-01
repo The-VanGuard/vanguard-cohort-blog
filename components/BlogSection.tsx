@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading1 } from "../lib/HeadingComponents";
+import { Heading1 } from "./HeadingComponents";
 
 interface IBlogSectionProps {
   title: string;
