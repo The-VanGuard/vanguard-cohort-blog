@@ -84,18 +84,34 @@ function Blog({ lesson }: lessonProps) {
             </div>
             <div className="mt-8 flex flex-row justify-between items-start ">
               <div className="text-sm font-medium leading-5 divide-y divide-gray-200 ">
-                <div className="space-y-8 py-8">
-                  <div>
-                    <h2 className="text-xs tracking-wide uppercase text-gray-500">
-                      Previous Post
-                    </h2>
-                    <div className="text-purple-500 hover:text-purple-600">
-                      <a href="/posts/graphql-schema-stitching">
-                        GraphQL Schema Stitching
-                      </a>
+                {lesson.previousLesson && (
+                  <div className="space-y-8 py-8">
+                    <div>
+                      <h2 className="text-xs tracking-wide uppercase text-gray-500">
+                        Previous Post
+                      </h2>
+                      <div className="text-purple-500 hover:text-purple-600">
+                        <a href={`/blog/${lesson.previousLesson.id}`}>
+                          {lesson.previousLesson.title}
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
+                {lesson.nextLesson && (
+                  <div className="space-y-8 py-8">
+                    <div>
+                      <h2 className="text-xs tracking-wide uppercase text-gray-500">
+                        Next Post
+                      </h2>
+                      <div className="text-purple-500 hover:text-purple-600">
+                        <a href={`/blog/${lesson.nextLesson.id}`}>
+                          {lesson.nextLesson.title}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div className="pt-8">
                   <a className="text-purple-500 hover:text-purple-600" href="/">
                     ← Back to the blog
@@ -116,7 +132,10 @@ function Blog({ lesson }: lessonProps) {
                   <ParagraphComponent>{lesson.intro.text}</ParagraphComponent>
                 </BlogSection>
 
-                <BlogSection title="Recap">
+                <BlogSection
+                  title="Recap"
+                  condition={lesson.recap.markdown !== "\n"}
+                >
                   <MDXRemote {...lesson.recapMDX} components={components} />
                 </BlogSection>
 
@@ -124,7 +143,7 @@ function Blog({ lesson }: lessonProps) {
                   <MDXRemote {...lesson.classDescMDX} components={components} />
                 </BlogSection>
 
-                <BlogSection title="Test">
+                <BlogSection title="Test" condition={lesson.test.length > 0}>
                   <TestComponent data={lesson.test} />
                 </BlogSection>
 
@@ -187,12 +206,40 @@ export async function getStaticProps({ params }) {
     }
   );
 
+  const { lessons: previousLessons } = await client.request(
+    `query fetchPreviousLesson($id: String!) {
+    lessons(before: $id) {
+      id
+      title
+    }
+  }`,
+    {
+      id: params.id,
+    }
+  );
+
+  const { lessons: nextLessons } = await client.request(
+    `query fetchPreviousLesson($id: String!) {
+    lessons(after: $id) {
+      id
+      title
+    }
+  }`,
+    {
+      id: params.id,
+    }
+  );
+
   const recapMDX = await serialize(lesson.recap.markdown);
   const classDescMDX = await serialize(lesson.classDescription.markdown);
   const assignmentMDX = await serialize(lesson.assignment.markdown);
   const additionalResourcesMDX = await serialize(
     lesson.additionalResources.markdown
   );
+
+  console.log("data", {
+    lesson,
+  });
 
   return {
     props: {
@@ -202,6 +249,8 @@ export async function getStaticProps({ params }) {
         classDescMDX,
         assignmentMDX,
         additionalResourcesMDX,
+        previousLesson: previousLessons[0] ? previousLessons[0] : null,
+        nextLesson: nextLessons[0] ? nextLessons[0] : null,
       },
     },
   };

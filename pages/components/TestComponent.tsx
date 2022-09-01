@@ -1,16 +1,20 @@
 import React from "react";
 import { Test } from "../../lib/types";
+import ParagraphComponent from "./ParagraphComponent";
+import TestCard from "./TestCard";
 
 interface InputProps {
   data: Test[];
 }
 
-function TestCard() {
-  return <div>TestComponent</div>;
-}
-
 function TestComponent({ data }: InputProps) {
-  return <div>TestComponent</div>;
+  return (
+    <div>
+      {data.map((question, index) => (
+        <TestCard count={1} key={index} {...question} />
+      ))}
+    </div>
+  );
 }
 
 export default TestComponent;

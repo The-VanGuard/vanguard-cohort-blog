@@ -17,9 +17,9 @@ function Header() {
       <div className="ml-10 w-fit">
         <a
           className="inline-flex items-center px-1 pt-1 border-b-2 text-lg font-medium leading-5 focus:outline-none transition duration-150 ease-in-out border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 focus:text-gray-600 focus:border-grey-600"
-          href="/about"
+          href="/"
         >
-          About
+          Home
         </a>
       </div>
     </header>
