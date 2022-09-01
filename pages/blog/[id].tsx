@@ -10,11 +10,11 @@ import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
 import BlogSection from "../components/BlogSection";
 import ParagraphComponent from "../components/ParagraphComponent";
-import { Heading2 } from "../components/HeadingComponents";
+import { Heading2 } from "../../lib/HeadingComponents";
 import {
   ListComponent,
   UnorderedListComponent,
-} from "../components/ListComponent";
+} from "../../lib/ListComponent";
 import AnchorComponent from "../components/AnchorComponent";
 import CodeComponent from "../components/CodeComponent";
 import dynamic from "next/dynamic";
