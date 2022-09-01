@@ -8,7 +8,6 @@ import Header from "./components/Header";
 import { Lesson } from "../lib/types";
 
 const Home: NextPage = ({ lessons }) => {
-  console.log(lessons);
 
   return (
     <div className="flex flex-col min-h-screen">

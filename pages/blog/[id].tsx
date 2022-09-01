@@ -67,7 +67,7 @@ function Blog({ lesson }: lessonProps) {
                   <dt className="sr-only">Published on</dt>
                   <dd className="text-base leading-6 font-medium text-gray-500">
                     <time
-                      datetime={moment(lesson.createdAt).format(
+                      dateTime={moment(lesson.createdAt).format(
                         "dddd, MMMM D, YYYY"
                       )}
                     >
@@ -236,10 +236,6 @@ export async function getStaticProps({ params }) {
   const additionalResourcesMDX = await serialize(
     lesson.additionalResources.markdown
   );
-
-  console.log("data", {
-    lesson,
-  });
 
   return {
     props: {
