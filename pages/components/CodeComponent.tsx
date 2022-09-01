@@ -3,7 +3,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { vscdDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { darcula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
-function CodeComponent(props) {
+function CodeComponent(props: any) {
   return (
     <SyntaxHighlighter
       language="javascript"
