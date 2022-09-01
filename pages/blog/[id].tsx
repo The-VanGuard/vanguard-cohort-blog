@@ -49,7 +49,7 @@ const components = {
 };
 
 // this is where the component is defined
-function Blog({ lesson }: lessonProps) {
+function Blog({ lesson }) {
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
@@ -131,7 +131,7 @@ function Blog({ lesson }: lessonProps) {
                   height={475}
                 />
 
-                <BlogSection title="Introduction">
+                <BlogSection title="Introduction" condition>
                   <ParagraphComponent>{lesson.intro.text}</ParagraphComponent>
                 </BlogSection>
 
@@ -142,7 +142,7 @@ function Blog({ lesson }: lessonProps) {
                   <MDXRemote {...lesson.recapMDX} components={components} />
                 </BlogSection>
 
-                <BlogSection title="Class Description">
+                <BlogSection title="Class Description" condition>
                   <MDXRemote {...lesson.classDescMDX} components={components} />
                 </BlogSection>
 
@@ -150,14 +150,14 @@ function Blog({ lesson }: lessonProps) {
                   <TestComponent data={lesson.test} />
                 </BlogSection>
 
-                <BlogSection title="Assignment">
+                <BlogSection title="Assignment" condition>
                   <MDXRemote
                     {...lesson.assignmentMDX}
                     components={components}
                   />
                 </BlogSection>
 
-                <BlogSection title="Additional Resources">
+                <BlogSection title="Additional Resources" condition>
                   <MDXRemote
                     {...lesson.additionalResourcesMDX}
                     components={components}
