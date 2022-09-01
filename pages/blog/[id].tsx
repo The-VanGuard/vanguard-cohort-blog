@@ -49,7 +49,7 @@ const components = {
 };
 
 // this is where the component is defined
-function Blog({ lesson }) {
+function Blog({ lesson }: any) {
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
@@ -174,7 +174,7 @@ function Blog({ lesson }) {
 
 export default Blog;
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params }: any) {
   const { lesson } = await client.request(
     `
   query fetchLesson($id: ID!) {
