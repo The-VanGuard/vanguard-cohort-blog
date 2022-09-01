@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import ParagraphComponent from "./ParagraphComponent";
-import { RadioGroup, Radio } from "react-radio-group";
 
-function TestCard({ count, answer, options, questions }) {
-  const [selectedQuestion, setSelectedQuestion] = useState(null);
+function TestCard({ count, answer, options, questions }: any) {
+  const [selectedQuestion, setSelectedQuestion] = useState<string | null>(null);
 
   return (
     <div className={"mt-4"}>
@@ -20,7 +19,7 @@ function TestCard({ count, answer, options, questions }) {
       </h4>
       <ParagraphComponent>{questions}</ParagraphComponent>
       <fieldset className="ml-4 mt-2">
-        {options.map((option, index) => (
+        {options.map((option: string, index: number) => (
           <div key={index}>
             <input
               type="radio"

@@ -1,6 +1,6 @@
 import React from "react";
 
-function AnchorComponent(props) {
+function AnchorComponent(props: any) {
   return (
     <a
       {...props}
